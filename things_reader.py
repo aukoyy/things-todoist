@@ -5,8 +5,6 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 
-from config import LIST_LABELS
-
 log = logging.getLogger("things_todoist")
 
 
@@ -27,12 +25,10 @@ class ThingsSnapshot:
     retired_containers: frozenset[str]
 
 
-def list_label(start: str | None, uuid: str, today_ids: set[str]) -> str:
-    """Exclusive Things-list label. Inbox wins over Today."""
+def list_label(start: str | None) -> str:
+    """Exclusive Things-list label. Today is a due date, not a label."""
     if start == "Inbox":
         return "Inbox"
-    if uuid in today_ids:
-        return "Today"
     if start == "Someday":
         return "Someday"
     return "Anytime"
@@ -135,7 +131,6 @@ def read_things() -> ThingsSnapshot:
 
     try:
         raw = things.tasks(type="to-do", include_items=True)
-        today = things.today(type="to-do")
         headings = _index_by_uuid(things.tasks(type="heading", status=None))
         all_projects = things.projects(status=None)
         projects = _index_by_uuid(all_projects)
@@ -155,14 +150,13 @@ def read_things() -> ThingsSnapshot:
     active_containers = frozenset(active_projects | active_areas)
     retired_containers = frozenset(retired_projects - active_containers)
 
-    today_ids = {item["uuid"] for item in today if item.get("type") == "to-do"}
     desired: list[DesiredTask] = []
     for task in raw:
         if task.get("type") != "to-do":
             continue
         uuid = task["uuid"]
         start = task.get("start")
-        list_name = list_label(start, uuid, today_ids)
+        list_name = list_label(start)
         title = (task.get("title") or "").strip() or "(untitled)"
         project_title, area_title = _resolve_project_area(task, headings, projects)
         if project_title not in active_projects:
@@ -180,9 +174,8 @@ def read_things() -> ThingsSnapshot:
             )
         )
     log.info(
-        "Read %d open Things to-dos (Today=%d). Active containers=%d retired=%d",
+        "Read %d open Things to-dos. Active containers=%d retired=%d",
         len(desired),
-        sum(1 for t in desired if t.list_label == "Today"),
         len(active_containers),
         len(retired_containers),
     )

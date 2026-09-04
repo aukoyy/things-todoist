@@ -5,7 +5,7 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass, field
 
-from config import LIST_LABELS
+from config import LIST_LABELS, OBSOLETE_LABELS
 from things_reader import DesiredTask
 from todoist_client import command, due_object, snapshot_item
 
@@ -80,8 +80,10 @@ def _queue_label_deletes(
     retired_containers: set[str],
 ) -> None:
     protected = set(LIST_LABELS) | needed_labels | set(active_containers)
+    protected -= set(OBSOLETE_LABELS)
     candidates = set(managed_labels)
     candidates |= set(retired_containers) & set(existing_labels)
+    candidates |= set(OBSOLETE_LABELS) & set(existing_labels)
     candidates -= protected
     for name in sorted(candidates):
         label_id = existing_labels.get(name)

@@ -24,11 +24,12 @@ Things to-dos when they're completed in Todoist/Sunsama.
   to-do (not projects or headings themselves).
 - Write: Todoist Sync API with incremental sync tokens. All synced tasks
   land in the Todoist Inbox. Organization is labels, not projects/sections:
-  exactly one of Inbox / Today / Anytime / Someday, plus a label for the
+  exactly one of Inbox / Anytime / Someday, plus a label for the
   Things project (if any) and area (if any). Things When → Todoist due
-  date. Deadline is appended to the description. If a Things area is
-  deleted, or a project is deleted/completed/canceled, that Todoist
-  label is removed (Inbox/Today/Anytime/Someday are never deleted).
+  date (that is what puts a task in Todoist Today). Deadline is appended
+  to the description. If a Things area is deleted, or a project is
+  deleted/completed/canceled, that Todoist label is removed
+  (Inbox/Anytime/Someday are never deleted).
 - Reverse: poll Todoist for completed tasks, then
   things:///update?id=<uuid>&completed=true
 - State: local file mapping Things UUID ↔ Todoist task ID. The differ must

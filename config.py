@@ -9,7 +9,9 @@ from pathlib import Path
 APP_NAME = "things-todoist"
 KEYCHAIN_SERVICE = "things-todoist"
 INBOX_ACTIVE_LIMIT = 300
-LIST_LABELS = ("Inbox", "Today", "Anytime", "Someday")
+LIST_LABELS = ("Inbox", "Anytime", "Someday")
+# Removed list labels still on existing Todoist tasks; strip and delete them.
+OBSOLETE_LABELS = ("Today",)
 MAX_COMMANDS_PER_REQUEST = 100
 SYNC_URL = "https://api.todoist.com/api/v1/sync"
 
