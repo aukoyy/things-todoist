@@ -23,11 +23,12 @@ Things to-dos when they're completed in Todoist/Sunsama.
 - Read: things.py against the local SQLite DB. Sync every incomplete
   to-do (not projects or headings themselves).
 - Write: Todoist Sync API with incremental sync tokens. All synced tasks
-  land in the Todoist Inbox. Organization is labels, not projects/sections:
-  exactly one of Inbox / Anytime / Someday, plus a label for the
-  Things project (if any) and area (if any). Things When → Todoist due
-  date (that is what puts a task in Todoist Today). Deadline is appended
-  to the description. If a Things area is deleted, or a project is
+  land in the Todoist Inbox. Organization is labels, not projects/sections,
+  with hierarchy Project > Area > Anytime: a project label if the to-do is
+  in a project, else an area label, else Anytime. Inbox and Someday always
+  apply when the to-do is in those lists. Things When → Todoist due date
+  (that is what puts a task in Todoist Today). Deadline is appended to the
+  description. If a Things area is deleted, or a project is
   deleted/completed/canceled, that Todoist label is removed
   (Inbox/Anytime/Someday are never deleted).
 - Reverse: poll Todoist for completed tasks, then

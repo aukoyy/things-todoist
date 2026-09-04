@@ -89,11 +89,16 @@ def _resolve_project_area(
 
 
 def _labels_for(list_name: str, project_title: str, area_title: str) -> tuple[str, ...]:
-    names = [list_name]
+    """Project > Area > Anytime. Inbox and Someday always apply when present."""
+    names: list[str] = []
+    if list_name in ("Inbox", "Someday"):
+        names.append(list_name)
     if project_title:
         names.append(project_title)
-    if area_title and area_title != project_title:
+    elif area_title:
         names.append(area_title)
+    elif list_name == "Anytime":
+        names.append(list_name)
     seen: set[str] = set()
     unique: list[str] = []
     for name in names:
