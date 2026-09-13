@@ -52,7 +52,7 @@ uv sync
 
 Logs: `~/Library/Logs/things-todoist/sync.log`. Mapping: `~/Library/Application Support/things-todoist/mapping.json`.
 
-Optional: connect Sunsama's Todoist integration. To sync every 5 minutes while the Mac is awake:
+Optional: connect Sunsama's Todoist integration. From the repo root, this installs the LaunchAgent that syncs every 5 minutes while the Mac is awake:
 
 ```bash
 scripts/install-launchd.sh
