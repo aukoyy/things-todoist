@@ -26,7 +26,7 @@ load_secret things-auth-token THINGS_AUTH_TOKEN
 
 PYTHON="${ROOT}/.venv/bin/python"
 if [[ ! -x "$PYTHON" ]]; then
-  echo "things-todoist: missing ${PYTHON}. Create the venv and pip install -r requirements.txt." >&2
+  echo "things-todoist: missing ${PYTHON}. Run: uv sync" >&2
   exit 1
 fi
 

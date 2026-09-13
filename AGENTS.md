@@ -55,8 +55,7 @@ on completion. Never write content back to Things.
 ## Run / schedule
 
 ```
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt
+uv sync
 
 # Tokens: .env (gitignored), the environment, or Keychain (service things-todoist)
 # TODOIST_API_TOKEN=...
@@ -64,8 +63,8 @@ python3 -m venv .venv
 # security add-generic-password -s things-todoist -a todoist-api-token -w
 # security add-generic-password -s things-todoist -a things-auth-token -w
 
-.venv/bin/python sync.py              # dry-run (default)
-.venv/bin/python sync.py --apply      # write
+uv run python sync.py                 # dry-run (default)
+uv run python sync.py --apply         # write
 
 scripts/install-launchd.sh            # every 5 minutes while the Mac is awake
 ```

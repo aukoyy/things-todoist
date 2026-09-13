@@ -131,7 +131,7 @@ def read_things() -> ThingsSnapshot:
         import things
     except ImportError as exc:
         raise SystemExit(
-            "things.py is not installed. Run: .venv/bin/pip install -r requirements.txt"
+            "things.py is not installed. Run: uv sync"
         ) from exc
 
     try:

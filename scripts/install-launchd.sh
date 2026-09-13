@@ -10,7 +10,7 @@ PYTHON="${ROOT}/.venv/bin/python"
 
 if [[ ! -x "$PYTHON" ]]; then
   echo "Create the venv first:" >&2
-  echo "  python3 -m venv .venv && .venv/bin/pip install -r requirements.txt" >&2
+  echo "  uv sync" >&2
   exit 1
 fi
 
