@@ -56,6 +56,9 @@ def apply_plan(plan: SyncPlan, client: TodoistClient, state: State, dry_run: boo
         )
         return
 
+    for line in plan.summaries:
+        log.info("apply %s", line)
+
     status: dict = {}
     temp: dict = {}
 

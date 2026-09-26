@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
+from datetime import date
 
 log = logging.getLogger("things_todoist")
 
@@ -108,10 +109,19 @@ def _labels_for(list_name: str, project_title: str, area_title: str) -> tuple[st
     return tuple(unique)
 
 
-def _as_due(start_date: str | None) -> str | None:
+def _as_due(start_date: str | None, *, today: date | None = None) -> str | None:
+    """Map a Things When date onto a Todoist due date.
+
+    Things shows a When of today or earlier in Today; it does not leave
+    tasks overdue. Those become today's date. A future When stays that date.
+    """
     if not start_date:
         return None
-    return str(start_date)[:10]
+    day = str(start_date)[:10]
+    current = (today or date.today()).isoformat()
+    if day <= current:
+        return current
+    return day
 
 
 def _container_titles(rows: list[dict], statuses: set[str] | None = None) -> set[str]:

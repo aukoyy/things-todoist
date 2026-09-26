@@ -19,7 +19,7 @@ Every incomplete to-do becomes an Inbox task. Organization is labels, not projec
 | An area (no project)        | that area's name    |
 | Anytime, no project or area | `Anytime`           |
 
-Things When → Todoist due date. Deadlines, headings, and checklists go in the description. `--apply` aborts at 300 open Things to-dos (Todoist Inbox cap).
+Things When → Todoist due date. A When of today or earlier becomes today's date, so Todoist matches Things' Today list instead of showing those tasks as overdue. A future When stays that date. Deadlines, headings, and checklists go in the description. `--apply` aborts at 300 open Things to-dos (Todoist Inbox cap).
 
 macOS only. Needs [uv](https://docs.astral.sh/uv/) (`brew install uv`) and Full Disk Access for `.venv/bin/python` (and `/bin/bash` if you use launchd).
 

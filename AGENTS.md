@@ -27,7 +27,9 @@ Things to-dos when they're completed in Todoist/Sunsama.
   with hierarchy Project > Area > Anytime: a project label if the to-do is
   in a project, else an area label, else Anytime. Inbox and Someday always
   apply when the to-do is in those lists. Things When → Todoist due date
-  (that is what puts a task in Todoist Today). Deadline is appended to the
+  (that is what puts a task in Todoist Today). A When of today or earlier
+  becomes today's date, because Things keeps those to-dos in Today rather
+  than overdue. A future When stays that date. Deadline is appended to the
   description. If a Things area is deleted, or a project is
   deleted/completed/canceled, that Todoist label is removed
   (Inbox/Anytime/Someday are never deleted).

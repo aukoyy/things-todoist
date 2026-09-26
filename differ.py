@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 import uuid
 from dataclasses import dataclass, field
 
@@ -56,8 +57,22 @@ class SyncPlan:
         )
 
 
+# Todoist rewrites a bare URL in the description into a titled markdown
+# link. Things keeps the URL. Treat those as the same text so the sync
+# does not update the task on every run.
+_MD_LINK = re.compile(r"\[[^\[\]]*\]\((https?://[^)\s]+)\)")
+
+
 def _due_date(item: dict) -> str | None:
     return snapshot_item(item)["due_date"]
+
+
+def _normalize_description(text: str) -> str:
+    return _MD_LINK.sub(r"\1", text or "")
+
+
+def _descriptions_equal(desired: str, actual: str) -> bool:
+    return _normalize_description(desired) == _normalize_description(actual)
 
 
 def _labels_equal(desired: tuple[str, ...], actual: list[str] | None) -> bool:
@@ -137,7 +152,7 @@ def build_plan(
         changes: dict = {}
         if (item.get("content") or "") != task.title:
             changes["content"] = task.title
-        if (item.get("description") or "") != task.description:
+        if not _descriptions_equal(task.description, item.get("description") or ""):
             changes["description"] = task.description
         if not _labels_equal(task.labels, item.get("labels")):
             changes["labels"] = list(task.labels)
